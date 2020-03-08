@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cvapp.base.ApiResponseListener
@@ -18,7 +20,11 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     private var binding: FragmentHomeBinding? = null
     private val viewModel by lazy { ViewModelProvider(this).get(HomeViewModel::class.java) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return binding?.root
     }
@@ -34,14 +40,25 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
 
     private fun initViews() {
         //  binding?.webVw?.settings?.javaScriptEnabled = true
-        //  binding?.webVw?.webViewClient = WebViewController
         binding?.webVw?.loadUrl("https://www.google.com");
 
-        viewModel.extractImagesFromWeb()
+        binding?.etSearch?.setOnEditorActionListener(OnEditorActionListener { arg0, arg1, arg2 ->
+            if (arg1 == EditorInfo.IME_ACTION_GO) {
+                // search pressed and perform your functionality.
+                viewModel.extractImagesFromWeb("https://www.javatpoint.com")
+            }
+            false
+        })
+
     }
 
     override fun <T> onResponse(it: T) {
-        context?.toast("sucess")
+
+        if (it is String) {
+            context?.toast(it as String)
+        }
+
+
     }
 
     override fun onError(it: Throwable) {
