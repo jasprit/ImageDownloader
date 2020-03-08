@@ -1,19 +1,24 @@
 package com.imagedownloader.ui.home
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cvapp.base.ApiResponseListener
 import com.cvapp.base.BaseFragment
-import com.cvapp.extenstions.hideKeyboard
+import com.cvapp.base.Status
 import com.cvapp.extenstions.isUrlValid
+import com.cvapp.extenstions.makeVisible
 import com.imagedownloader.R
 import com.imagedownloader.databinding.FragmentHomeBinding
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.toast
 
 
@@ -40,6 +45,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
 
 
     private fun initViews() {
+
         binding?.etSearch?.setOnEditorActionListener(OnEditorActionListener { arg0, arg1, arg2 ->
             if (arg1 == EditorInfo.IME_ACTION_GO) {
                 // search pressed and perform your functionality.
@@ -48,17 +54,20 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
             false
         })
 
+        binding?.fb?.setOnClickListener {
+            viewModel.extractImagesFromWeb(binding?.etSearch?.text.toString())
+        }
+
     }
 
     private fun checkValidation() {
         val webUrl = binding?.etSearch?.text.toString()
-        if (isUrlValid(webUrl ?: ""))
-        //    viewModel.extractImagesFromWeb("https://www.javatpoint.com")
+        if (isUrlValid(webUrl ?: "")) {
+            binding?.webVw?.webViewClient = webViewClient
             binding?.webVw?.loadUrl(webUrl);
-        else{
+        } else {
             context?.toast("Invalid Url")
         }
-
     }
 
     override fun <T> onResponse(it: T) {
@@ -69,6 +78,19 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
 
     override fun onError(it: Throwable) {
         context?.toast(it.message.toString())
+    }
+
+
+    private val webViewClient = object : WebViewClient() {
+        override fun onPageFinished(view: WebView, url: String) {
+            viewModel.status.value = Status.SUCCESS
+            fb.makeVisible()
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            viewModel.status.value = Status.LOADING
+        }
     }
 
 }
