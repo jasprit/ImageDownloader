@@ -12,6 +12,7 @@ import android.os.Build
 import android.text.*
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,35 +37,16 @@ import java.util.regex.Pattern
  */
 
 
-fun isEmailValid(email: CharSequence?): Boolean {
+fun isUrlValid(url: String) = URLUtil.isValidUrl(url)
 
-    val pattern: Pattern
-    val matcher: Matcher
 
-    val emailPattern =
-        "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-    pattern = Pattern.compile(emailPattern)
-    matcher = pattern.matcher(email)
 
-    return matcher.matches()
-}
 
 fun View.displaySnackbar(message: String?) {
     Snackbar.make(this, message!!, Snackbar.LENGTH_SHORT).show()
 }
 
-fun Context.loadIconsFromArray(arrayID: Int): Array<Drawable?> {
-    val ta = resources.obtainTypedArray(arrayID)
-    val icons = arrayOfNulls<Drawable>(ta.length())
-    for (i in 0 until ta.length()) {
-        val id = ta.getResourceId(i, 0)
-        if (id != 0) {
-            icons[i] = ContextCompat.getDrawable(this, id)
-        }
-    }
-    ta.recycle()
-    return icons
-}
+
 
 fun setDialogAttributes(dialog: Dialog?, height: Int) {
     val window = dialog?.window ?: return

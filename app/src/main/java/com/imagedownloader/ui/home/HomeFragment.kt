@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cvapp.base.ApiResponseListener
 import com.cvapp.base.BaseFragment
+import com.cvapp.extenstions.hideKeyboard
+import com.cvapp.extenstions.isUrlValid
 import com.imagedownloader.R
 import com.imagedownloader.databinding.FragmentHomeBinding
 import org.jetbrains.anko.toast
@@ -32,33 +34,37 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         getCallbacks(viewModel, this)
         initViews()
     }
 
 
     private fun initViews() {
-        //  binding?.webVw?.settings?.javaScriptEnabled = true
-        binding?.webVw?.loadUrl("https://www.google.com");
-
         binding?.etSearch?.setOnEditorActionListener(OnEditorActionListener { arg0, arg1, arg2 ->
             if (arg1 == EditorInfo.IME_ACTION_GO) {
                 // search pressed and perform your functionality.
-                viewModel.extractImagesFromWeb("https://www.javatpoint.com")
+                checkValidation()
             }
             false
         })
 
     }
 
-    override fun <T> onResponse(it: T) {
+    private fun checkValidation() {
+        val webUrl = binding?.etSearch?.text.toString()
+        if (isUrlValid(webUrl ?: ""))
+        //    viewModel.extractImagesFromWeb("https://www.javatpoint.com")
+            binding?.webVw?.loadUrl(webUrl);
+        else{
+            context?.toast("Invalid Url")
+        }
 
+    }
+
+    override fun <T> onResponse(it: T) {
         if (it is String) {
             context?.toast(it as String)
         }
-
-
     }
 
     override fun onError(it: Throwable) {
