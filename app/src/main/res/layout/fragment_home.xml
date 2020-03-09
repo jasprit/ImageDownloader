@@ -8,7 +8,6 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -16,6 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            app:helperTextEnabled="true"
+            app:helperText="@string/enter_url_above"
             android:layout_marginEnd="16dp"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +47,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" >
+
+        </WebView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -56,13 +59,9 @@
             android:layout_marginBottom="40dp"
             android:visibility="invisible"
             android:backgroundTint="@color/colorAccent"
-            android:tint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

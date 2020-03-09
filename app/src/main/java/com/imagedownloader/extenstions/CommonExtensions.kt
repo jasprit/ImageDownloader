@@ -50,14 +50,6 @@ fun ViewGroup.inflateLayout(layoutRes: Int): ViewDataBinding {
     return DataBindingUtil.inflate(LayoutInflater.from(this.context), layoutRes, this, false)
 }
 
-fun Context.hideKeyboard() {
-    val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-    val currentFocus = (this as AppCompatActivity).currentFocus
-    imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_IMPLICIT_ONLY)
-}
-
-
 /**
  * Visibility modifiers and check functions
  */

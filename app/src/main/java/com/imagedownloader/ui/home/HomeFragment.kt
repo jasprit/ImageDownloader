@@ -26,11 +26,7 @@ import com.cvapp.base.BaseFragment
 import com.cvapp.base.Status
 import com.cvapp.extenstions.*
 import com.cvapp.util.Constants
-import com.cvapp.util.Constants.EXTERNAL_PATH
-import com.cvapp.util.Constants.FOLDER_NAME
-import com.cvapp.util.Constants.IMAGE_EXT
-import com.cvapp.util.Constants.IMAGE_NAME
-import com.cvapp.util.Constants.IMAGE_TYPE
+
 import com.cvapp.util.Constants.PERMISSION_REQUEST_CODE
 import com.eazypermissions.common.model.PermissionResult
 import com.eazypermissions.coroutinespermission.PermissionManager

@@ -18,12 +18,8 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mContext = this
         loader = createDialog(mContext)
-
         window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
     }
-
-
 
     open fun <T> getCallbacks(
         viewModel: BaseViewModel<T>,

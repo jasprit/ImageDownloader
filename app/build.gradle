@@ -59,11 +59,10 @@ dependencies {
     implementation "org.jetbrains.anko:anko-design:$anko_version"
     
     implementation 'com.google.android.material:material:1.2.0-alpha05'
+    //
     implementation files('libs/jsoup-1.13.1.jar')
-
     //easy permissions
     implementation 'com.sagar:coroutinespermission:2.0.2'
-
     //coil
     implementation("io.coil-kt:coil:0.9.5")
 }
