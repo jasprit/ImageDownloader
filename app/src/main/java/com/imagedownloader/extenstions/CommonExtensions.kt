@@ -13,15 +13,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
 import android.widget.Toast
-
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.google.android.material.snackbar.Snackbar
 import com.imagedownloader.util.Constants
 import com.imagedownloader.util.Constants.EXTERNAL_PATH
 import com.imagedownloader.util.Constants.FOLDER_NAME
 import com.imagedownloader.util.Constants.IMAGE_EXT
 import com.imagedownloader.util.Constants.IMAGE_TYPE
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -85,39 +84,41 @@ fun isMarshmallowOrHigher(): Boolean {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 }
 
-fun Context.showToast(msg:String) = Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+fun Context.showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
 @Throws(IOException::class)
- fun Context.saveImage(bitmap: Bitmap, coroutineScope:CoroutineScope) = coroutineScope.launch(Dispatchers.IO) {
-    val saved: Boolean
-    val fos: OutputStream?
-    val folderName = FOLDER_NAME
-    val name = Constants.IMAGE_NAME + getCurrentDate()
+fun Context.saveImage(bitmap: Bitmap, coroutineScope: CoroutineScope) =
+    coroutineScope.launch(Dispatchers.IO) {
+        val saved: Boolean
+        val fos: OutputStream?
+        val folderName = FOLDER_NAME
+        val name = Constants.IMAGE_NAME + getCurrentDate()
 
-    fos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        val resolver: ContentResolver? = contentResolver
-        val contentValues = ContentValues()
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, IMAGE_TYPE)
-        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "$EXTERNAL_PATH/$folderName")
-        val imageUri =
-            resolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-        imageUri?.let { resolver.openOutputStream(it) }
-    } else {
-        val imagesDir = Environment.getExternalStoragePublicDirectory(
-            Environment.DIRECTORY_DCIM
-        ).toString() + File.separator + folderName
-        val file = File(imagesDir)
-        if (!file.exists()) {
-            file.mkdir()
+        fos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val resolver: ContentResolver? = contentResolver
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, IMAGE_TYPE)
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "$EXTERNAL_PATH/$folderName")
+            val imageUri =
+                resolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            imageUri?.let { resolver.openOutputStream(it) }
+        } else {
+            val imagesDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM
+            ).toString() + File.separator + folderName
+            val file = File(imagesDir)
+            if (!file.exists()) {
+                file.mkdir()
+            }
+            val image = File(imagesDir, "$name$IMAGE_EXT")
+            FileOutputStream(image)
         }
-        val image = File(imagesDir, "$name$IMAGE_EXT")
-        FileOutputStream(image)
+        if (fos == null) return@launch
+        saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        fos.flush()
+        fos.close()
     }
-    saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-    fos?.flush()
-    fos?.close()
-}
 
 
 
