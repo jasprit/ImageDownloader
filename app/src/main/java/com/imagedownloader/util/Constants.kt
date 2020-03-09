@@ -1,11 +1,20 @@
 package com.cvapp.util
 
+import com.cvapp.extenstions.getCurrentDate
 
 
 object Constants {
 
     // request codes
-    const val LOCATION_SETTINGS_REQUEST_CODE = 1001
     const val PERMISSION_REQUEST_CODE = 1002
+    const val IMAGE_NAME = "IMG_"
+    const val FOLDER_NAME = "GLOBAL_RELAY"
+    const val IMAGE_TYPE = "image/png"
+    const val EXTERNAL_PATH = "DCIM"
+    const val IMAGE_EXT = ".png"
+    const val CSS_QUERY = "img[src~=(?i)\\.(png|jpe?g|gif)]"
+
+
+
 
 }
