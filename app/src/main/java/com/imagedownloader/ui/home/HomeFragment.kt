@@ -1,14 +1,9 @@
 package com.imagedownloader.ui.home
 
 import android.Manifest
-import android.content.ContentResolver
-import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +16,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import coil.Coil
 import coil.api.get
-import com.cvapp.base.ApiResponseListener
-import com.cvapp.base.BaseFragment
-import com.cvapp.base.Status
-import com.cvapp.extenstions.*
-import com.cvapp.util.Constants
+import com.imagedownloader.base.ApiResponseListener
+import com.imagedownloader.base.BaseFragment
+import com.imagedownloader.base.Status
+import com.imagedownloader.extenstions.*
+import com.imagedownloader.util.Constants
 
-import com.cvapp.util.Constants.PERMISSION_REQUEST_CODE
+import com.imagedownloader.util.Constants.PERMISSION_REQUEST_CODE
 import com.eazypermissions.common.model.PermissionResult
 import com.eazypermissions.coroutinespermission.PermissionManager
 import com.imagedownloader.R
@@ -36,10 +31,7 @@ import com.imagedownloader.model.home.ImageModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.toast
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
+
 
 
 class HomeFragment : BaseFragment(), ApiResponseListener {

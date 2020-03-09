@@ -4,10 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
-import com.cvapp.base.BaseActivity
+import com.imagedownloader.base.BaseActivity
 import com.imagedownloader.R
-import java.io.File
-import java.io.FileOutputStream
 
 
 class MainActivity : BaseActivity() {
@@ -18,7 +16,4 @@ class MainActivity : BaseActivity() {
 
         // navigation library has been added to this activity.
     }
-
-
-
 }

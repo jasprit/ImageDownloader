@@ -1,17 +1,10 @@
 package com.imagedownloader.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import coil.Coil
-import coil.api.get
-import com.cvapp.base.BaseViewModel
-import com.cvapp.base.BasicData
-import com.cvapp.util.Constants.CSS_QUERY
+import com.imagedownloader.base.BaseViewModel
+import com.imagedownloader.util.Constants.CSS_QUERY
 import com.imagedownloader.model.home.ImageModel
 import kotlinx.coroutines.*
-import org.jetbrains.anko.toast
 import org.jsoup.Jsoup
 
 class HomeViewModel : BaseViewModel<Any>(){

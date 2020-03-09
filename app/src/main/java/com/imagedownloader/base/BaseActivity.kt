@@ -1,4 +1,4 @@
-package com.cvapp.base
+package com.imagedownloader.base
 
 import android.app.Dialog
 import android.content.Context
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.cvapp.extenstions.createDialog
+import com.imagedownloader.extenstions.createDialog
 
 
 abstract class BaseActivity : AppCompatActivity() {

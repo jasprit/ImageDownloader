@@ -1,4 +1,4 @@
-package com.cvapp.base
+package com.imagedownloader.base
 
 
 /**

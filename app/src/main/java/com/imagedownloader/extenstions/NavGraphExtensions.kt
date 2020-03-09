@@ -1,4 +1,4 @@
-package com.cvapp.extenstions
+package com.imagedownloader.extenstions
 
 import android.view.View
 import androidx.navigation.Navigation

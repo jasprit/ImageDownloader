@@ -1,11 +1,10 @@
-package com.cvapp.util
+package com.imagedownloader.util
 
-import com.cvapp.extenstions.getCurrentDate
+import com.imagedownloader.extenstions.getCurrentDate
 
 
 object Constants {
 
-    // request codes
     const val PERMISSION_REQUEST_CODE = 1002
     const val IMAGE_NAME = "IMG_"
     const val FOLDER_NAME = "GLOBAL_RELAY"

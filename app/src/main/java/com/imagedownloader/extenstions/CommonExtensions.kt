@@ -1,4 +1,4 @@
-package com.cvapp.extenstions
+package com.imagedownloader.extenstions
 
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -13,14 +13,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.cvapp.util.Constants
-import com.cvapp.util.Constants.EXTERNAL_PATH
-import com.cvapp.util.Constants.FOLDER_NAME
-import com.cvapp.util.Constants.IMAGE_EXT
-import com.cvapp.util.Constants.IMAGE_TYPE
+import com.imagedownloader.util.Constants
+import com.imagedownloader.util.Constants.EXTERNAL_PATH
+import com.imagedownloader.util.Constants.FOLDER_NAME
+import com.imagedownloader.util.Constants.IMAGE_EXT
+import com.imagedownloader.util.Constants.IMAGE_TYPE
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -1,13 +1,13 @@
-package com.cvapp.base
+package com.imagedownloader.base
 
 import android.app.Dialog
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.cvapp.extenstions.createDialog
-import com.cvapp.extenstions.navigateBack
-import com.cvapp.util.ConnectionLiveData
+import com.imagedownloader.extenstions.createDialog
+import com.imagedownloader.extenstions.navigateBack
+import com.imagedownloader.util.ConnectionLiveData
 import com.google.android.material.snackbar.Snackbar
 import com.imagedownloader.R
 import org.jetbrains.anko.design.indefiniteSnackbar

@@ -1,4 +1,4 @@
-package com.cvapp.base
+package com.imagedownloader.base
 
 data class BasicData(val statusCode: Int, val error: String, val msg: String)
 

@@ -1,4 +1,4 @@
-package com.cvapp.util
+package com.imagedownloader.util
 
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE

@@ -1,4 +1,4 @@
-package com.cvapp.extenstions
+package com.imagedownloader.extenstions
 
 import android.app.Dialog
 import android.content.Context
