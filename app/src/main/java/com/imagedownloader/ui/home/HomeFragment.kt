@@ -16,22 +16,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import coil.Coil
 import coil.api.get
-import com.imagedownloader.base.ApiResponseListener
-import com.imagedownloader.base.BaseFragment
-import com.imagedownloader.base.Status
-import com.imagedownloader.extenstions.*
-import com.imagedownloader.util.Constants
-
-import com.imagedownloader.util.Constants.PERMISSION_REQUEST_CODE
 import com.eazypermissions.common.model.PermissionResult
 import com.eazypermissions.coroutinespermission.PermissionManager
 import com.imagedownloader.R
+import com.imagedownloader.base.ApiResponseListener
+import com.imagedownloader.base.BaseFragment
+import com.imagedownloader.base.Status
 import com.imagedownloader.databinding.FragmentHomeBinding
+import com.imagedownloader.extenstions.displaySnackbar
+import com.imagedownloader.extenstions.isUrlValid
+import com.imagedownloader.extenstions.makeVisible
+import com.imagedownloader.extenstions.saveImage
 import com.imagedownloader.model.home.ImageModel
+import com.imagedownloader.util.Constants
+import com.imagedownloader.util.Constants.PERMISSION_REQUEST_CODE
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.toast
-
 
 
 class HomeFragment : BaseFragment(), ApiResponseListener {
@@ -61,14 +62,13 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState?.isEmpty == false){
+        if (savedInstanceState?.isEmpty == false) {
             binding?.webVw?.restoreState(savedInstanceState)
             binding?.fb?.makeVisible()
         }
     }
 
     private fun initViews() {
-
         binding?.etSearch?.setOnEditorActionListener(OnEditorActionListener { arg0, arg1, arg2 ->
             if (arg1 == EditorInfo.IME_ACTION_GO) {
                 // search pressed and perform your functionality.
@@ -80,9 +80,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
         binding?.fb?.setOnClickListener {
             checkPermissions()
         }
-
     }
-
 
     /**
      * After valid http url app preview it further
@@ -91,7 +89,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
         val webUrl = binding?.etSearch?.text.toString()
         if (isUrlValid(webUrl ?: "")) {
             binding?.webVw?.webViewClient = webViewClient
-            binding?.webVw?.settings?.javaScriptEnabled  = true
+            binding?.webVw?.settings?.javaScriptEnabled = true
             binding?.webVw?.loadUrl(webUrl);
         } else {
             context?.toast(getString(R.string.invalid_url))
@@ -104,7 +102,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     override fun <T> onResponse(it: T) {
         when (it) {
             is String -> {
-              //  context?.toast(it as String)
+                //  context?.toast(it as String)
                 binding?.root?.displaySnackbar(it as String)
             }
             is ImageModel -> {
@@ -126,6 +124,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
             viewModel.status.value = Status.SUCCESS
             fb.makeVisible()
         }
+
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             viewModel.status.value = Status.LOADING
@@ -157,7 +156,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     private fun handlePermissionsResult(permissionResult: PermissionResult) {
         when (permissionResult) {
             is PermissionResult.PermissionGranted -> {
-             //   context?.toast(getString(R.string.granted))
+                //   context?.toast(getString(R.string.granted))
                 viewModel.extractImagesFromWeb(binding?.etSearch?.text.toString())
             }
             is PermissionResult.PermissionDenied -> {
@@ -178,19 +177,13 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
      */
 
     private fun saveImageToStorage(imgUrl: String) = coroutineScope.launch(Dispatchers.IO) {
-        val drawable = Coil.get(imgUrl)   // coil used suspend function here to download image here..
+        val drawable =
+            Coil.get(imgUrl)   // coil used suspend function here to download image here..
         val bm = (drawable as BitmapDrawable).bitmap
-        context?.saveImage(bm,coroutineScope)
+        context?.saveImage(bm, coroutineScope)
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        parentJob.cancel()
-    }
-
-
-    private fun showDialog(permissionResult: PermissionResult){
+    private fun showDialog(permissionResult: PermissionResult) {
         val alertDialog = AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.we_need_permission))
             .setTitle(getString(R.string.rational))
@@ -219,6 +212,11 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         binding?.webVw?.saveState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        parentJob.cancel()
     }
 
 }

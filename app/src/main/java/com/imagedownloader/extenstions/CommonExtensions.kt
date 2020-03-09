@@ -7,14 +7,9 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
 import com.imagedownloader.util.Constants
 import com.imagedownloader.util.Constants.EXTERNAL_PATH
@@ -43,10 +38,6 @@ fun getCurrentDate() = Date().time.toString()
 
 fun View.displaySnackbar(message: String?) {
     Snackbar.make(this, message!!, Snackbar.LENGTH_SHORT).show()
-}
-
-fun ViewGroup.inflateLayout(layoutRes: Int): ViewDataBinding {
-    return DataBindingUtil.inflate(LayoutInflater.from(this.context), layoutRes, this, false)
 }
 
 /**
@@ -79,12 +70,6 @@ fun View.hideKeyboard(context: Context?) {
         context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
 }
-
-fun isMarshmallowOrHigher(): Boolean {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-}
-
-fun Context.showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
 @Throws(IOException::class)
 fun Context.saveImage(bitmap: Bitmap, coroutineScope: CoroutineScope) =
