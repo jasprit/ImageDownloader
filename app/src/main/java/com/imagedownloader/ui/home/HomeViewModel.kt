@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 import org.jetbrains.anko.toast
 import org.jsoup.Jsoup
 
-class HomeViewModel : BaseViewModel<ImageModel>(){
+class HomeViewModel : BaseViewModel<Any>(){
 
     private val job = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
@@ -35,13 +35,13 @@ class HomeViewModel : BaseViewModel<ImageModel>(){
                 val src: String = value.absUrl("src")
                 Log.d("urlOfImages", " - $src")
                 coroutineScope.launch(Dispatchers.Main) {
-                    msg.value = "Downloading $index out of ${images.count()} images"
+                    data.value = "Downloading $index out of ${images.count()} images"
                     data.value = ImageModel(src)
                 }
                 delay(500)
             }
             coroutineScope.launch(Dispatchers.Main) {
-                msg.value = "Downloading Finished"
+                data.value = "Downloading Finished"
             }
         }
     }

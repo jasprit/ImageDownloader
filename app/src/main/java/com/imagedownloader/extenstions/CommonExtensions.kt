@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -92,6 +93,7 @@ fun isMarshmallowOrHigher(): Boolean {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 }
 
+fun Context.showToast(msg:String) = Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 
 @Throws(IOException::class)
  fun Context.saveImage(bitmap: Bitmap, coroutineScope:CoroutineScope) = coroutineScope.launch(Dispatchers.IO) {
@@ -108,7 +110,7 @@ fun isMarshmallowOrHigher(): Boolean {
         contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "$EXTERNAL_PATH/$folderName")
         val imageUri =
             resolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-        resolver?.openOutputStream(imageUri!!)
+        imageUri?.let { resolver.openOutputStream(it) }
     } else {
         val imagesDir = Environment.getExternalStoragePublicDirectory(
             Environment.DIRECTORY_DCIM
@@ -121,8 +123,8 @@ fun isMarshmallowOrHigher(): Boolean {
         FileOutputStream(image)
     }
     saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-    fos!!.flush()
-    fos.close()
+    fos?.flush()
+    fos?.close()
 }
 
 

@@ -24,10 +24,7 @@ import coil.api.get
 import com.cvapp.base.ApiResponseListener
 import com.cvapp.base.BaseFragment
 import com.cvapp.base.Status
-import com.cvapp.extenstions.getCurrentDate
-import com.cvapp.extenstions.isUrlValid
-import com.cvapp.extenstions.makeVisible
-import com.cvapp.extenstions.saveImage
+import com.cvapp.extenstions.*
 import com.cvapp.util.Constants
 import com.cvapp.util.Constants.EXTERNAL_PATH
 import com.cvapp.util.Constants.FOLDER_NAME
@@ -57,6 +54,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     private val parentJob = Job()
     private val coroutineScope = CoroutineScope(parentJob + Dispatchers.Default)
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -73,7 +71,16 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
         initViews()
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState?.isEmpty == false){
+            binding?.webVw?.restoreState(savedInstanceState)
+            binding?.fb?.makeVisible()
+        }
+    }
+
     private fun initViews() {
+
         binding?.etSearch?.setOnEditorActionListener(OnEditorActionListener { arg0, arg1, arg2 ->
             if (arg1 == EditorInfo.IME_ACTION_GO) {
                 // search pressed and perform your functionality.
@@ -109,7 +116,8 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     override fun <T> onResponse(it: T) {
         when (it) {
             is String -> {
-                context?.toast(it as String)
+              //  context?.toast(it as String)
+                binding?.root?.displaySnackbar(it as String)
             }
             is ImageModel -> {
                 saveImageToStorage((it as ImageModel).imageUrl ?: "")
@@ -161,7 +169,7 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     private fun handlePermissionsResult(permissionResult: PermissionResult) {
         when (permissionResult) {
             is PermissionResult.PermissionGranted -> {
-                context?.toast(getString(R.string.granted))
+             //   context?.toast(getString(R.string.granted))
                 viewModel.extractImagesFromWeb(binding?.etSearch?.text.toString())
             }
             is PermissionResult.PermissionDenied -> {
@@ -218,6 +226,11 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
                 dialog.dismiss()
             }.create()
         alertDialog.show()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding?.webVw?.saveState(outState)
     }
 
 }
