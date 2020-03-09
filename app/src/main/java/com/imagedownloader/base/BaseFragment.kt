@@ -64,5 +64,5 @@ abstract class BaseFragment : Fragment() {
         })
     }
 
-    fun onBackPressed() = view?.navigateBack()
+  //   fun onBackPressed() = view?.navigateBack()
 }

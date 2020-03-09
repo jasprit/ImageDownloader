@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 
 open class BaseViewModel<T> : ViewModel() {
 
-
     val status = MutableLiveData<Status>()
     val error = MutableLiveData<Throwable>()
-    val msg = MutableLiveData<String>()
     val data = MutableLiveData<T>()
 
     fun response(): MutableLiveData<T> {
@@ -22,6 +20,4 @@ open class BaseViewModel<T> : ViewModel() {
     fun error(): MutableLiveData<Throwable> {
         return error
     }
-
-
 }
