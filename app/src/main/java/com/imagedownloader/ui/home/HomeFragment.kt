@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView.OnEditorActionListener
@@ -86,14 +87,20 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
      * After valid http url app preview it further
      */
     private fun checkValidation() {
-        val webUrl = binding?.etSearch?.text.toString()
-        if (isUrlValid(webUrl ?: "")) {
-            binding?.webVw?.webViewClient = webViewClient
-            binding?.webVw?.settings?.javaScriptEnabled = true
-            binding?.webVw?.loadUrl(webUrl);
-        } else {
-            context?.toast(getString(R.string.invalid_url))
+        var webUrl = binding?.etSearch?.text.toString()
+
+        if (!isUrlValid(webUrl ?: "")) {
+            webUrl = "http://$webUrl.com"
+            binding?.etSearch?.setText(webUrl)
         }
+
+        binding?.webVw?.loadUrl(webUrl);
+        binding?.webVw?.settings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        binding?.webVw?.settings?.javaScriptEnabled = true
+        binding?.webVw?.settings?.domStorageEnabled = true
+        binding?.webVw?.settings?.loadWithOverviewMode = true
+        binding?.webVw?.webViewClient = webViewClient
+
     }
 
     /**
@@ -122,12 +129,14 @@ class HomeFragment : BaseFragment(), ApiResponseListener {
     private val webViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView, url: String) {
             viewModel.status.value = Status.SUCCESS
+            binding?.etSearch?.setText(url)
             fb.makeVisible()
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             viewModel.status.value = Status.LOADING
+       //     binding?.etSearch?.setText(url)
         }
     }
 
