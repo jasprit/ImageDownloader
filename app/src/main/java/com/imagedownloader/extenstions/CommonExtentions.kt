@@ -40,12 +40,9 @@ import java.util.regex.Pattern
 fun isUrlValid(url: String) = URLUtil.isValidUrl(url)
 
 
-
-
 fun View.displaySnackbar(message: String?) {
     Snackbar.make(this, message!!, Snackbar.LENGTH_SHORT).show()
 }
-
 
 
 fun setDialogAttributes(dialog: Dialog?, height: Int) {
@@ -72,9 +69,6 @@ fun ImageView.loadImage(url: Any?) {
         .apply(RequestOptions.centerCropTransform())
         .into(this)
 }
-
-
-
 
 
 fun hasAllPermissionsGranted(@NonNull grantResults: IntArray): Boolean {

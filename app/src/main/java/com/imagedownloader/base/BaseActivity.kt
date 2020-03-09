@@ -23,6 +23,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
+
+
     open fun <T> getCallbacks(
         viewModel: BaseViewModel<T>,
         apiResponseListener: ApiResponseListener? = null,

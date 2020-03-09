@@ -1,14 +1,19 @@
 package com.imagedownloader.ui.home
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import coil.Coil
+import coil.api.get
 import com.cvapp.base.BaseViewModel
 import com.cvapp.base.BasicData
+import com.imagedownloader.model.home.ImageModel
 import kotlinx.coroutines.*
 import org.jetbrains.anko.toast
 import org.jsoup.Jsoup
 
-class HomeViewModel : BaseViewModel<BasicData>(){
+class HomeViewModel : BaseViewModel<ImageModel>(){
 
 
     private val job = SupervisorJob()
@@ -20,7 +25,7 @@ class HomeViewModel : BaseViewModel<BasicData>(){
         val images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]")
 
         if (images.isNullOrEmpty()){
-            withContext(Dispatchers.Main){
+            coroutineScope.launch(Dispatchers.Main){
                 error.value = Throwable("No Images found in this url please try another one..!")
             }
            // return
@@ -31,14 +36,22 @@ class HomeViewModel : BaseViewModel<BasicData>(){
             for (el in images) {
                 val src: String = el.absUrl("src")
                 Log.d("urlOfImages", " - $src")
+                coroutineScope.launch(Dispatchers.Main) {
+                    data.value = ImageModel(src)
+                }
+                delay(1000)
             }
         }
     }
+
+
 
 
     override fun onCleared() {
         super.onCleared()
         coroutineScope.coroutineContext.cancelChildren()
     }
+
+
 
 }

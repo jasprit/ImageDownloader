@@ -2,18 +2,17 @@ package com.cvapp.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
 
 open class BaseViewModel<T> : ViewModel() {
 
-    val compositeDisposable = CompositeDisposable()
 
     val status = MutableLiveData<Status>()
     val error = MutableLiveData<Throwable>()
     val msg = MutableLiveData<String>()
+    val data = MutableLiveData<T>()
 
-    fun response(): MutableLiveData<String> {
-        return msg
+    fun response(): MutableLiveData<T> {
+        return data
     }
 
     fun status(): MutableLiveData<Status> {
@@ -24,9 +23,5 @@ open class BaseViewModel<T> : ViewModel() {
         return error
     }
 
-    override fun onCleared() {
-        super.onCleared()
 
-        compositeDisposable.dispose()
-    }
 }
