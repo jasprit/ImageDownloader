@@ -3,6 +3,8 @@
 This app downloads images from any web page.
 
 [![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://drive.google.com/file/d/10SFaPUdW7hK5z0bRTmSlndQ9bNUJuggF/view?usp=sharing)
+[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](https://youtu.be/T-D1KVIuvjA)
+
 
 This repo has been created for the assignment purpose. More detail is given below.
 
