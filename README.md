@@ -2,8 +2,8 @@
 
 This app downloads images from any web page.
 
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://drive.google.com/file/d/10SFaPUdW7hK5z0bRTmSlndQ9bNUJuggF/view?usp=sharing)
 
+![Alt Text](https://firebasestorage.googleapis.com/v0/b/portfolio-e2421.appspot.com/o/485wzc.gif?alt=media&token=4c715683-fe0e-464a-8e12-097bd3d6f733)
 
 
 This repo has been created for the assignment purpose. More detail is given below.
