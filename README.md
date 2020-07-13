@@ -1,5 +1,9 @@
 # ImageDownloader
 
+This app downloads images from any web page.
+
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://drive.google.com/file/d/10SFaPUdW7hK5z0bRTmSlndQ9bNUJuggF/view?usp=sharing)
+
 This repo has been created for the assignment purpose. More detail is given below.
 
 - Please design and implement an Image download application for Android in Java or Kotlin.
